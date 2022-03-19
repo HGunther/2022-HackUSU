@@ -32,6 +32,7 @@ public class GameState : MonoBehaviour
         
         isGameOver = true;
         Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
+        Time.timeScale = 0;
     }
     public void Collect(int i){
         OrbPool.Collect(i);

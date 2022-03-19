@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        GetInput();
+        if (!gameState_REF.isGameOver){
+            GetInput();
+        }
     }
 
     void GetInput(){
