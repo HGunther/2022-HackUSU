@@ -70,8 +70,11 @@ public class GameState : MonoBehaviour
 
         if (TrainingMode){
             isGameOver = true;
+            player.SetReward(Score);
             player.EndEpisode();
+            thrower.SetReward(player.totalMovementDuringGame);
             thrower.EndEpisode();
+            
         } else {
             isGameOver = true;
             Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
