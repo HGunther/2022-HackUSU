@@ -6,12 +6,9 @@ public class GameState : MonoBehaviour
 {
 
     public Vector2 screenBounds;
-
-    public OrbPoolBehavior OrbPool;
-
     public GameObject GameOver_Widget;
     public bool isGameOver = false;
-
+    public OrbPoolBehavior OrbPool;
 
     void Start()
     {
@@ -28,7 +25,14 @@ public class GameState : MonoBehaviour
         
     }
 
-
+    public void GameOver(){
+        if (isGameOver){
+            return;
+        }
+        
+        isGameOver = true;
+        Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
+    }
     public void Collect(int i){
         OrbPool.Collect(i);
     }
@@ -66,4 +70,6 @@ public class GameState : MonoBehaviour
     public void CollectFirstActive(){
         OrbPool.CollectFirstActive();
     }
+
+
 }
