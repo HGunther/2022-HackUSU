@@ -11,7 +11,9 @@ public class BoundaryWallBehavior : MonoBehaviour
         gameState = (GameState)FindObjectOfType<GameState>();
     }
     void OnTriggerEnter2D(Collider2D other){
-        int id = other.gameObject.GetComponent<OrbBehavior>().OrbID;
-        gameState.Collect(id);
+        if(other.gameObject.GetComponent<OrbBehavior>()){
+            int id = other.gameObject.GetComponent<OrbBehavior>().OrbID;
+            gameState.Collect(id);
+        }
     }
 }
