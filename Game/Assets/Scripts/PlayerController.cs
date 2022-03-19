@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     bool mouseControl = false;
     Vector3 mousePos;
     public float mouseDeadzone = 5.0f;
-    float levelWidth;
+    float levelWidth = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -18,12 +18,35 @@ public class PlayerController : MonoBehaviour
         startPos = transform.position;
         mousePos = Input.mousePosition;
 
-        levelWidth = FindObjectOfType<GameState>().screenBounds.x;
+        var gameState = FindObjectOfType<GameState>();
+        if (gameState != null){
+            levelWidth = gameState.screenBounds.x;
+            if (levelWidth < 1){
+                Debug.LogWarning("PlayerController recieved a bad levelWidth");
+            }
+            Debug.Log("LevelWidth: " + levelWidth.ToString());
+        } else {
+            Debug.LogWarning("PlayerController could not find a GameState object");
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (levelWidth < 1){
+            var gameState = FindObjectOfType<GameState>();
+            if (gameState != null){
+                levelWidth = gameState.screenBounds.x;
+                if (levelWidth < 1){
+                    Debug.LogWarning("PlayerController recieved a bad levelWidth");
+                }
+                Debug.Log("LevelWidth: " + levelWidth.ToString());
+            } else {
+                Debug.LogWarning("PlayerController could not find a GameState object");
+            }
+        }
+
         GetInput();
     }
 
@@ -32,6 +55,7 @@ public class PlayerController : MonoBehaviour
         if (mouseControl){
             // Detect change from mouse to keyboard
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)){
+                Debug.Log("Switching to keyboard input");
                 mouseControl = false;
             }
         } else {
@@ -39,6 +63,7 @@ public class PlayerController : MonoBehaviour
             var mouseDif = Input.mousePosition - mousePos;
             if (mouseDif.magnitude > mouseDeadzone){
                 mouseControl = true;
+                Debug.Log("Switching to mouse input");
             }
             mousePos = Input.mousePosition;
         }
@@ -76,15 +101,10 @@ public class PlayerController : MonoBehaviour
 
         // Screen bounds check
         transform.position = new Vector3(
-            Mathf.Min(transform.position.x, levelWidth),
+            Mathf.Clamp(transform.position.x, -levelWidth/2, levelWidth/2),
             transform.position.y,
             transform.position.z
-            );
-        transform.position = new Vector3(
-            Mathf.Max(transform.position.x, -levelWidth),
-            transform.position.y,
-            transform.position.z
-            );
+            );            
     }
 
 }

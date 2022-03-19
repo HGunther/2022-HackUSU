@@ -11,7 +11,8 @@ public class GameState : MonoBehaviour
     {
         var cameraHeight = Camera.main.orthographicSize * 2;
         var cameraWidth = Camera.main.aspect * cameraHeight;
-        screenBounds = new Vector2(cameraWidth, cameraHeight);        
+        screenBounds = new Vector2(cameraWidth, cameraHeight);
+        Debug.Log("Screen size is " + screenBounds.ToString());   
     }
 
     void Update()
