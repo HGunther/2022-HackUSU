@@ -39,6 +39,6 @@ public class OrbBehavior : MonoBehaviour
     public void OnCollect(){
         Active = false;
         Velocity = Vector3.zero;
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(-10f, 0f, 0f);
     }
 }
