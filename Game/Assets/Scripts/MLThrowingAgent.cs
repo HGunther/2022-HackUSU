@@ -12,7 +12,7 @@ public class MLThrowingAgent : Agent
     
     void Start()
     {
-        gameState = (GameState)FindObjectOfType<GameState>();
+        gameState = FindObjectOfType<GameState>();
         player = (GameObject)FindObjectOfType<PlayerRules>().gameObject;
     }
 
