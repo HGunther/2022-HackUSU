@@ -37,7 +37,11 @@ public class MLDodgingAgent : Agent
     }
 
     public override void OnEpisodeBegin(){
+        gameState_REF.ResetGame();
+    }
 
+    public void ResetPlayer(){
+        transform.position = startPos;
     }
 
     public override void CollectObservations(VectorSensor sensor){

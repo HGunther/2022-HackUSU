@@ -10,7 +10,9 @@ public class GameState : MonoBehaviour
     public Vector2 screenBounds;
     public GameObject GameOver_Widget;
     public bool isGameOver = false;
+    bool hasGameStarted = false;
     public OrbPoolBehavior OrbPool;
+    public MLDodgingAgent player;
 
     public int Score;
     private float TimeToNextPoint = 0.1f;
@@ -20,6 +22,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         isGameOver = false;
+        hasGameStarted = false;
         Time.timeScale = 1;
 
         var cameraHeight = Camera.main.orthographicSize * 2;
@@ -33,6 +36,10 @@ public class GameState : MonoBehaviour
 
     void Update()
     {
+        if (!hasGameStarted){
+            hasGameStarted = true;
+        }
+
         TimeCounter += Time.deltaTime;
         if(TimeCounter > TimeToNextPoint){
             TimeCounter -= TimeToNextPoint;
@@ -40,6 +47,15 @@ public class GameState : MonoBehaviour
             if (ScoreText){
                 ScoreText.text = Score.ToString("000000");
             }
+        }
+    }
+
+    public void ResetGame(){
+        if (hasGameStarted){
+            hasGameStarted = false;
+            OrbPool.CollectAll();
+            Score = 0;
+            player.ResetPlayer();
         }
     }
 

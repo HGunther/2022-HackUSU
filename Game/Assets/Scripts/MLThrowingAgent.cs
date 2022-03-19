@@ -14,7 +14,7 @@ public class MLThrowingAgent : Agent
     }
 
     public override void OnEpisodeBegin(){
-
+        gameState.ResetGame();
     }
 
     public override void CollectObservations(VectorSensor sensor){
