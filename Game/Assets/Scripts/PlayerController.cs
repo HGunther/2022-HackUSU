@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     Vector3 mousePos;
     public float mouseDeadzone = 5.0f;
     float levelWidth = 0;
+
+    GameState gameState_REF;
     
     // Start is called before the first frame update
     void Start()
@@ -18,9 +20,9 @@ public class PlayerController : MonoBehaviour
         startPos = transform.position;
         mousePos = Input.mousePosition;
 
-        var gameState = FindObjectOfType<GameState>();
-        if (gameState != null){
-            levelWidth = gameState.screenBounds.x;
+        gameState_REF = FindObjectOfType<GameState>();
+        if (gameState_REF != null){
+            levelWidth = gameState_REF.screenBounds.x;
             if (levelWidth < 1){
                 Debug.LogWarning("PlayerController recieved a bad levelWidth");
             }
@@ -34,10 +36,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (levelWidth < 1){
-            var gameState = FindObjectOfType<GameState>();
-            if (gameState != null){
-                levelWidth = gameState.screenBounds.x;
+        if (gameState_REF == null || levelWidth < 1){
+            gameState_REF = FindObjectOfType<GameState>();
+            if (gameState_REF != null){
+                levelWidth = gameState_REF.screenBounds.x;
                 if (levelWidth < 1){
                     Debug.LogWarning("PlayerController recieved a bad levelWidth");
                 }
@@ -105,6 +107,22 @@ public class PlayerController : MonoBehaviour
             transform.position.y,
             transform.position.z
             );            
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        if (gameState_REF == null){
+            Debug.LogError("PlayerController never found a GameState and now requires it to handle collisions");
+        }
+
+        gameState_REF.GameOver();
+    }
+
+    void OnTriggerEnter2D(Collider2D col){
+        if (gameState_REF == null){
+            Debug.LogError("PlayerController never found a GameState and now requires it to handle collisions");
+        }
+
+        gameState_REF.GameOver();
     }
 
 }
