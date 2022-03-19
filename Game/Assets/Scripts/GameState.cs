@@ -84,6 +84,11 @@ public class GameState : MonoBehaviour
         return OrbPool.GetTotalCount();
     }
 
+    public List<GameObject> GetOrbList(){
+        return OrbPool.GetOrbList();
+    }
+
+
 //Testing Functions
     public void RandomLaunch(){
         OrbPool.RandomLaunch();

@@ -55,7 +55,9 @@ public class OrbPoolBehavior : MonoBehaviour
         return NumOrbs;
     }
 
-
+    public List<GameObject> GetOrbList(){
+        return Orbs;
+    }
 
     public void RandomLaunch(){
         float r_Scale = Random.Range(0.3f, 4.0f);
