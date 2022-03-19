@@ -9,7 +9,9 @@ public class OrbPoolBehavior : MonoBehaviour
     public List<GameObject> Orbs = new List<GameObject>();
     public int ActiveOrbCount;
 
-    void Start()
+    GameState gameState;
+
+    public void Start()
     {
         for (int i = 0; i < NumOrbs; i++)
         {
@@ -21,6 +23,7 @@ public class OrbPoolBehavior : MonoBehaviour
         }
 
         ActiveOrbCount = 0;
+        gameState = (GameState)FindObjectOfType<GameState>();
     }
 
     public void Collect(int i){

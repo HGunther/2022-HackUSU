@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class BoundaryWallBehavior : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other){
+
+    GameState gameState;
+
+    void Start(){
+        gameState = (GameState)FindObjectOfType<GameState>();
+    }
+    void OnTriggerEnter2D(Collider2D other){
         int id = other.gameObject.GetComponent<OrbBehavior>().OrbID;
-        Debug.Log("ID: " + id);
+        gameState.Collect(id);
     }
 }

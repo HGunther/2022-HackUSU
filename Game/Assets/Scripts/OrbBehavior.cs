@@ -9,11 +9,14 @@ public class OrbBehavior : MonoBehaviour
     public Vector2 Velocity;
     public float StartX;
     public float Scale;
+
+
+    GameState gameState;
  
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameState = (GameState)FindObjectOfType<GameState>();        
     }
 
     // Update is called once per frame
@@ -31,7 +34,7 @@ public class OrbBehavior : MonoBehaviour
     }
 
     public void Launch(){
-        transform.position = new Vector3(StartX, 6f, 0f);
+        transform.position = new Vector3(StartX, gameState.screenBounds.y/2f, 0f);
         transform.localScale = new Vector3(Scale, Scale, 0f);
         Active = true;
     }
@@ -39,6 +42,6 @@ public class OrbBehavior : MonoBehaviour
     public void OnCollect(){
         Active = false;
         Velocity = Vector3.zero;
-        transform.position = new Vector3(-10f, 0f, 0f);
+        transform.position = new Vector3(0f, gameState.screenBounds.y/2f + 100, 0f);
     }
 }
