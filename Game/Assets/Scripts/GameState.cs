@@ -70,8 +70,9 @@ public class GameState : MonoBehaviour
         isGameOver = true;
 
         if (TrainingMode){
-            player.SetReward(Score/10);
             thrower.SetReward(player.totalMovementDuringGame);
+            player.SetReward(Score/10);
+            
             player.EndEpisode();
             thrower.EndEpisode();
             
