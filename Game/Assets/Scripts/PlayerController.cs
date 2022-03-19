@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     bool mouseControl = false;
     Vector3 mousePos;
     public float mouseDeadzone = 5.0f;
-    float levelWidth = 0;
 
     GameState gameState_REF;
     
@@ -21,13 +20,7 @@ public class PlayerController : MonoBehaviour
         mousePos = Input.mousePosition;
 
         gameState_REF = FindObjectOfType<GameState>();
-        if (gameState_REF != null){
-            levelWidth = gameState_REF.screenBounds.x;
-            if (levelWidth < 1){
-                Debug.LogWarning("PlayerController recieved a bad levelWidth");
-            }
-            Debug.Log("LevelWidth: " + levelWidth.ToString());
-        } else {
+        if (gameState_REF == null){
             Debug.LogWarning("PlayerController could not find a GameState object");
         }
         
@@ -36,19 +29,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameState_REF == null || levelWidth < 1){
-            gameState_REF = FindObjectOfType<GameState>();
-            if (gameState_REF != null){
-                levelWidth = gameState_REF.screenBounds.x;
-                if (levelWidth < 1){
-                    Debug.LogWarning("PlayerController recieved a bad levelWidth");
-                }
-                Debug.Log("LevelWidth: " + levelWidth.ToString());
-            } else {
-                Debug.LogWarning("PlayerController could not find a GameState object");
-            }
-        }
-
         if (!gameState_REF.isGameOver){
             GetInput();
         }
@@ -80,10 +60,10 @@ public class PlayerController : MonoBehaviour
                 // move the full distance
                 if (worldMousePos.x > transform.position.x){
                     // move right
-                    transform.position += new Vector3( maxMovement, 0, 0);
+                    transform.Translate(maxMovement, 0f, 0f);
                 } else {
                     // move left
-                    transform.position -= new Vector3( maxMovement, 0, 0);
+                    transform.Translate(-maxMovement, 0f, 0f);
                 }
             } else {
                 // player almost to mouse - don't move full distance
@@ -95,20 +75,13 @@ public class PlayerController : MonoBehaviour
             // Keyboard control
             if (Input.GetKey(KeyCode.D)){
                 // Move right
-                transform.position += new Vector3( speed, 0, 0 ) * Time.deltaTime;
+                transform.Translate(speed*Time.deltaTime, 0f, 0f);
             }
             if (Input.GetKey(KeyCode.A)){
                 // Move left
-                transform.position -= new Vector3( speed, 0, 0 ) * Time.deltaTime;
+                transform.Translate(-speed*Time.deltaTime, 0f, 0f);
             }
-        }
-
-        // Screen bounds check
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, -levelWidth/2, levelWidth/2),
-            transform.position.y,
-            transform.position.z
-            );            
+        }     
     }
 
     void OnCollisionEnter2D(Collision2D col){
@@ -116,7 +89,9 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerController never found a GameState and now requires it to handle collisions");
         }
 
-        gameState_REF.GameOver();
+        if (col.gameObject.GetComponent<OrbBehavior>()){
+            gameState_REF.GameOver();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col){
@@ -124,7 +99,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerController never found a GameState and now requires it to handle collisions");
         }
 
-        gameState_REF.GameOver();
+        if (col.gameObject.GetComponent<OrbBehavior>()){
+            gameState_REF.GameOver();
+        }
     }
-
 }
