@@ -13,11 +13,14 @@ public class GameState : MonoBehaviour
     bool hasGameStarted = false;
     public OrbPoolBehavior OrbPool;
     public MLDodgingAgent player;
+    public MLThrowingAgent thrower;
 
     public int Score;
     private float TimeToNextPoint = 0.1f;
     private float TimeCounter;
     public Text ScoreText;
+
+    public bool TrainingMode = false;
 
     void Start()
     {
@@ -53,6 +56,7 @@ public class GameState : MonoBehaviour
     public void ResetGame(){
         if (hasGameStarted){
             hasGameStarted = false;
+            isGameOver = false;
             OrbPool.CollectAll();
             Score = 0;
             player.ResetPlayer();
@@ -63,10 +67,16 @@ public class GameState : MonoBehaviour
         if (isGameOver){
             return;
         }
-        
-        isGameOver = true;
-        Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
-        Time.timeScale = 0;
+
+        if (TrainingMode){
+            isGameOver = true;
+            player.EndEpisode();
+            thrower.EndEpisode();
+        } else {
+            isGameOver = true;
+            Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
+            Time.timeScale = 0;
+        }        
     }
 
     public void PlayAgain(){

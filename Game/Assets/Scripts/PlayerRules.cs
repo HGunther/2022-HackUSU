@@ -27,13 +27,13 @@ public class PlayerRules : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col){
-        if (gameState_REF == null){
-            Debug.LogError("PlayerRules never found a GameState and now requires it to handle collisions");
-        }
+        // if (gameState_REF == null){
+        //     Debug.LogError("PlayerRules never found a GameState and now requires it to handle collisions");
+        // }
 
-        if (col.gameObject.GetComponent<OrbBehavior>()){
-            gameState_REF.GameOver();
-        }
+        // if (col.gameObject.GetComponent<OrbBehavior>()){
+        //     gameState_REF.GameOver();
+        // }
     }
 
     void OnTriggerEnter2D(Collider2D col){
