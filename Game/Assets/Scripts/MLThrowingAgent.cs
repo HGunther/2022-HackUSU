@@ -16,8 +16,17 @@ public class MLThrowingAgent : Agent
         player = (GameObject)FindObjectOfType<PlayerRules>().gameObject;
     }
 
-    public override void OnEpisodeBegin(){
+    void Update(){
+        if (!gameState){
+            gameState = FindObjectOfType<GameState>();
+            if (!gameState){
+                Debug.LogWarning("MLDodgingAgent could not find a GameState object");
+            }
+        }
+    }
 
+    public override void OnEpisodeBegin(){
+        gameState.ResetGame();
     }
 
     public override void CollectObservations(VectorSensor sensor){

@@ -78,5 +78,13 @@ public class OrbPoolBehavior : MonoBehaviour
         }
     }
 
+    public void CollectAll(){
+        for(int i = 0; i < NumOrbs; i++){
+            if(Orbs[i].GetComponent<OrbBehavior>().Active){
+                Collect(i);
+            }
+        }
+    }
+
 
 }
