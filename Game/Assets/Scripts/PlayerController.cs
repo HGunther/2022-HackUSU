@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     bool mouseControl = false;
     Vector3 mousePos;
     public float mouseDeadzone = 5.0f;
+    float levelWidth;
     
     // Start is called before the first frame update
     void Start()
@@ -17,8 +18,7 @@ public class PlayerController : MonoBehaviour
         startPos = transform.position;
         mousePos = Input.mousePosition;
 
-        var cameraHeight = Camera.main.orthographicSize * 2;
-        var cameraWidth = Camera.main.aspect * cameraHeight;
+        levelWidth = FindObjectOfType<GameState>().screenBounds.x;
     }
 
     // Update is called once per frame
@@ -73,6 +73,18 @@ public class PlayerController : MonoBehaviour
                 transform.position -= new Vector3( speed, 0, 0 ) * Time.deltaTime;
             }
         }
+
+        // Screen bounds check
+        transform.position = new Vector3(
+            Mathf.Min(transform.position.x, levelWidth),
+            transform.position.y,
+            transform.position.z
+            );
+        transform.position = new Vector3(
+            Mathf.Max(transform.position.x, -levelWidth),
+            transform.position.y,
+            transform.position.z
+            );
     }
 
 }
