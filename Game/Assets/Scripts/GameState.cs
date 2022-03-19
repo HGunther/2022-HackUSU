@@ -6,6 +6,8 @@ public class GameState : MonoBehaviour
 {
 
     public Vector2 screenBounds;
+    public GameObject GameOver_Widget;
+    public bool isGameOver = false;
 
     void Start()
     {
@@ -18,5 +20,14 @@ public class GameState : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void GameOver(){
+        if (isGameOver){
+            return;
+        }
+        
+        isGameOver = true;
+        Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
     }
 }
