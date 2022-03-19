@@ -37,7 +37,9 @@ public class GameState : MonoBehaviour
         if(TimeCounter > TimeToNextPoint){
             TimeCounter -= TimeToNextPoint;
             Score++;
-            ScoreText.text = Score.ToString("000000");
+            if (ScoreText){
+                ScoreText.text = Score.ToString("000000");
+            }
         }
     }
 

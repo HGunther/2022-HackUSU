@@ -12,12 +12,22 @@ public class RandomBrainBehavior : MonoBehaviour
     void Start()
     {
         TimeCounter = 0f;
-        gameState = (GameState)FindObjectOfType<GameState>();
+        gameState = FindObjectOfType<GameState>();
+        if (!gameState){
+            Debug.LogWarning("RandomBrain could not find a GameState object");
+        }
     }
 
     
     void Update()
     {
+        if (!gameState){
+            gameState = FindObjectOfType<GameState>();
+            if (!gameState){
+                Debug.LogWarning("RandomBrain could not find a GameState object");
+            }
+        }
+
         TimeCounter += Time.deltaTime;
         if(TimeCounter > TimeBetweenLaunch){
             TimeCounter -= TimeBetweenLaunch;

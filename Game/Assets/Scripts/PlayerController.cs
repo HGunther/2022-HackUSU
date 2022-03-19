@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         mousePos = Input.mousePosition;
 
         gameState_REF = FindObjectOfType<GameState>();
-        if (gameState_REF != null){
+        if (gameState_REF){
             levelWidth = gameState_REF.screenBounds.x;
             if (levelWidth < 1){
                 Debug.LogWarning("PlayerController recieved a bad levelWidth");
@@ -36,9 +36,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameState_REF == null || levelWidth < 1){
+        if (!gameState_REF || levelWidth < 1){
             gameState_REF = FindObjectOfType<GameState>();
-            if (gameState_REF != null){
+            if (gameState_REF){
                 levelWidth = gameState_REF.screenBounds.x;
                 if (levelWidth < 1){
                     Debug.LogWarning("PlayerController recieved a bad levelWidth");
