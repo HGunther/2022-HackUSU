@@ -71,8 +71,8 @@ public class GameState : MonoBehaviour
 
         if (TrainingMode){
             player.SetReward(Score/10);
-            player.EndEpisode();
             thrower.SetReward(player.totalMovementDuringGame);
+            player.EndEpisode();
             thrower.EndEpisode();
             
         } else {
