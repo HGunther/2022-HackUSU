@@ -13,6 +13,5 @@ public class BoundaryWallBehavior : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other){
         int id = other.gameObject.GetComponent<OrbBehavior>().OrbID;
         gameState.Collect(id);
-        Debug.Log("HELLO THERE!");
     }
 }

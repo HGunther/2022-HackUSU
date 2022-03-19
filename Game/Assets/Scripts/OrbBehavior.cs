@@ -34,7 +34,7 @@ public class OrbBehavior : MonoBehaviour
     }
 
     public void Launch(){
-        transform.position = new Vector3(StartX, gameState.screenBounds.y, 0f);
+        transform.position = new Vector3(StartX, gameState.screenBounds.y/2f, 0f);
         transform.localScale = new Vector3(Scale, Scale, 0f);
         Active = true;
     }
@@ -42,6 +42,6 @@ public class OrbBehavior : MonoBehaviour
     public void OnCollect(){
         Active = false;
         Velocity = Vector3.zero;
-        transform.position = new Vector3(0f, gameState.screenBounds.y + 100, 0f);
+        transform.position = new Vector3(0f, gameState.screenBounds.y/2f + 100, 0f);
     }
 }
