@@ -12,7 +12,7 @@ public class GameState : MonoBehaviour
     public OrbPoolBehavior OrbPool;
 
     public int Score;
-    private float TimeToNextPoint = 1f;
+    private float TimeToNextPoint = 0.1f;
     private float TimeCounter;
     public Text ScoreText;
 
@@ -33,7 +33,7 @@ public class GameState : MonoBehaviour
         if(TimeCounter > TimeToNextPoint){
             TimeCounter -= TimeToNextPoint;
             Score++;
-            ScoreText.text = Score.ToString("0000");
+            ScoreText.text = Score.ToString("000000");
         }
     }
 

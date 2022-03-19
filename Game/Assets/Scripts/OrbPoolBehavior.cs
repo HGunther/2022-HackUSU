@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OrbPoolBehavior : MonoBehaviour
 {
-    static int NumOrbs = 3;
+    static int NumOrbs = 50;
     public GameObject Prefab;
     public List<GameObject> Orbs = new List<GameObject>();
     public int ActiveOrbCount;
