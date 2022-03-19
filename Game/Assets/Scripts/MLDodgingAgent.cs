@@ -16,6 +16,9 @@ public class MLDodgingAgent : Agent
     Vector3 mousePos;
     public float mouseDeadzone = 5.0f;
 
+    public float totalMovementDuringGame;
+    public float lastFrameXPos;
+
     void Start()
     {
         startPos = transform.position;
@@ -29,6 +32,9 @@ public class MLDodgingAgent : Agent
 
         gameState = (GameState)FindObjectOfType<GameState>();
         player = (GameObject)FindObjectOfType<PlayerRules>().gameObject;
+
+        totalMovementDuringGame = 0f;
+        lastFrameXPos = startPos.x;
     }
 
     void Update(){
@@ -46,6 +52,7 @@ public class MLDodgingAgent : Agent
 
     public void ResetPlayer(){
         transform.position = startPos;
+        totalMovementDuringGame = 0f;
     }
 
     public override void CollectObservations(VectorSensor sensor){
@@ -62,6 +69,10 @@ public class MLDodgingAgent : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers){
         var movement = speed * Time.deltaTime * actionBuffers.ContinuousActions[0];
         transform.Translate(movement, 0f, 0f);
+
+
+        totalMovementDuringGame += Mathf.Abs(lastFrameXPos - transform.position.x);
+        lastFrameXPos = transform.position.x;
 
     }
 

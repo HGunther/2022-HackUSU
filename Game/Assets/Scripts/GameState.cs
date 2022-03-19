@@ -72,7 +72,9 @@ public class GameState : MonoBehaviour
         if (TrainingMode){
             player.SetReward(Score/10);
             player.EndEpisode();
+            thrower.SetReward(player.totalMovementDuringGame);
             thrower.EndEpisode();
+            
         } else {
             Instantiate(GameOver_Widget, new Vector3(), new Quaternion());
             Time.timeScale = 0;
