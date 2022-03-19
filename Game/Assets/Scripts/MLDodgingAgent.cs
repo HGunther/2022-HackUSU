@@ -21,7 +21,7 @@ public class MLDodgingAgent : Agent
     }
 
     public override void CollectObservations(VectorSensor sensor){
-       sensor.AddObservation(player.transform.position);
+        sensor.AddObservation(player.transform.position);
 
         List<GameObject> OrbList = gameState.GetOrbList();
         foreach(GameObject orb in OrbList){
