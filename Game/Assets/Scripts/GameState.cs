@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameState : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class GameState : MonoBehaviour
     public bool isGameOver = false;
     public OrbPoolBehavior OrbPool;
 
+    public int Score;
+    private float TimeToNextPoint = 0.1f;
+    private float TimeCounter;
+    public Text ScoreText;
+
     void Start()
     {
         isGameOver = false;
@@ -19,14 +25,20 @@ public class GameState : MonoBehaviour
         var cameraHeight = Camera.main.orthographicSize * 2;
         var cameraWidth = Camera.main.aspect * cameraHeight;
         screenBounds = new Vector2(cameraWidth, cameraHeight);
-        Debug.Log("Screen size is " + screenBounds.ToString());   
+        Debug.Log("Screen size is " + screenBounds.ToString());  
 
-        //OrbPool.Start();
+        Score = 0;
+        TimeCounter = 0f; 
     }
 
     void Update()
     {
-        
+        TimeCounter += Time.deltaTime;
+        if(TimeCounter > TimeToNextPoint){
+            TimeCounter -= TimeToNextPoint;
+            Score++;
+            ScoreText.text = Score.ToString("000000");
+        }
     }
 
     public void GameOver(){
@@ -69,9 +81,6 @@ public class GameState : MonoBehaviour
     public int GetTotalCount(){
         return OrbPool.GetTotalCount();
     }
-
-
-
 
 //Testing Functions
     public void RandomLaunch(){
